@@ -9,6 +9,22 @@ The goal of this CNN implementation is three fold:
 
 My aim is to implement this excellent research paper on training sparse neural networks using the [Lottery Ticket Hypothesis](https://arxiv.org/pdf/1803.03635.pdf).
 
+## Dataset
+
+There are ~24,000 images of Natural scences around the world and is present on [Kaggle](https://www.kaggle.com/puneet6060/intel-image-classification). The images are of size 150x150 distributed under 6 categories which are as follows:
+
+|Label| Landscape|
+|-|-|
+|0| buildings|
+|1| forest|
+|2| glacier|
+|3| mountain|
+|4| sea|
+|5| street|
+
+The train, test and prediction data is separated in each zip files. I would be using the first two sets for this analysis.
+This data was initially published on [AnalyticsVidhya](https://datahack.analyticsvidhya.com) by Intel to host a Image classification Challenge.
+
 ## Dependencies
 
 numpy=1.20.3
