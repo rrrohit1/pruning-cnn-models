@@ -5,6 +5,8 @@ from torch import nn, optim
 from torchvision import transforms
 import torchvision
 
+
+# Ensure that the output of this 2 line code is GPU
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Using device: {device.type}")
 
