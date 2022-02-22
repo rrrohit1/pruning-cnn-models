@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import torch
 from torch import nn, optim
-from torchvision import transforms
+from torchvision import transforms, models
 import torchvision
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -48,41 +48,6 @@ valid_loader = torch.utils.data.DataLoader(
     batch_size=BATCH_SIZE,  # the size of batches the dataloader returns
     shuffle=True,
 )
-
-
-class simple_CNN(torch.nn.Module):
-    def __init__(
-        self,
-    ):
-        super().__init__()
-        self.main = torch.nn.Sequential(
-            torch.nn.Conv2d(
-                in_channels=3, out_channels=15, kernel_size=(3, 3), padding=1
-            ),  # 1st CNN layer
-            torch.nn.ReLU(),
-            torch.nn.MaxPool2d((2, 2)),
-            nn.Dropout(0.2),
-            torch.nn.Conv2d(
-                in_channels=15, out_channels=4, kernel_size=(3, 3), padding=1
-            ),  # 2nd CNN layer
-            torch.nn.ReLU(),
-            torch.nn.MaxPool2d((2, 2)),
-            nn.Dropout(0.2),
-            torch.nn.Flatten(),
-            torch.nn.Linear(4096, 1024),
-            torch.nn.ReLU(),
-            torch.nn.Linear(1024, 512),
-            torch.nn.ReLU(),
-            torch.nn.Linear(512, 128),
-            torch.nn.ReLU(),
-            torch.nn.Linear(128, 64),
-            torch.nn.ReLU(),
-            torch.nn.Linear(64, 6),
-        )
-
-    def forward(self, x):
-        out = self.main(x)
-        return out
 
 
 def trainer(
@@ -155,12 +120,18 @@ def trainer(
     return results
 
 
-torch.manual_seed(2018)
+densenet = models.densenet121(pretrained=True)
 
-model = simple_CNN()
-model.to(device)
+for param in densenet.parameters():  # Freeze parameters so we don't update them
+    param.requires_grad = False
+
+new_layers = nn.Sequential(nn.Linear(1024, 512), nn.ReLU(), nn.Linear(512, 6))
+densenet.classifier = new_layers
+
+torch.manual_seed(2018)
+densenet.to(device)
 
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=0.0005)
+optimizer = optim.Adam(densenet.parameters(), lr=0.0005)
 
-results = trainer(model, criterion, optimizer, train_loader, valid_loader, epochs=20)
+results = trainer(densenet, criterion, optimizer, train_loader, valid_loader, epochs=20)
