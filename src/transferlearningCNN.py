@@ -120,9 +120,13 @@ def trainer(
     return results
 
 
+# Transfer Learning using densenet121
+
 densenet = models.densenet121(pretrained=True)
 
-for param in densenet.parameters():  # Freeze parameters so we don't update them
+for (
+    param
+) in densenet.parameters():  # Freeze parameters which are not updated during training
     param.requires_grad = False
 
 new_layers = nn.Sequential(nn.Linear(1024, 512), nn.ReLU(), nn.Linear(512, 6))
@@ -132,6 +136,28 @@ torch.manual_seed(2018)
 densenet.to(device)
 
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(densenet.parameters(), lr=0.0005)
+optimizer = optim.Adam(densenet.parameters(), lr=0.001)
 
-results = trainer(densenet, criterion, optimizer, train_loader, valid_loader, epochs=20)
+results = trainer(densenet, criterion, optimizer, train_loader, valid_loader, epochs=30)
+
+
+# Transfer Learning using resnet18
+
+resnet = models.resnet18(pretrained=True)
+
+for (
+    param
+) in resnet.parameters():  # Freeze parameters which are not updated during training
+    param.requires_grad = False
+
+new_layers = nn.Sequential(nn.Linear(512, 256), nn.ReLU(), nn.Linear(256, 6))
+resnet.fc = new_layers
+
+torch.manual_seed(2018)
+
+resnet.to(device)
+
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(resnet.parameters(), lr=0.001)
+
+results = trainer(resnet, criterion, optimizer, train_loader, valid_loader, epochs=30)
