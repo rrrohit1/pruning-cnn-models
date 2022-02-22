@@ -25,6 +25,16 @@ There are ~24,000 images of Natural scences around the world and is present on [
 The train, test and prediction data is separated in each zip files. I would be using the first two sets for this analysis.
 This data was initially published on [AnalyticsVidhya](https://datahack.analyticsvidhya.com) by Intel to host a Image classification Challenge.
 
+## Results
+
+Since the problem is a multi-label image classification problem, CrossEntropyLoss is used with the Adam Optimizer.
+
+| Implementation| Learning Rate| Train Accuracy | Valid Accuracy |
+|-|-|-|-|
+| simpleCNN - 2 CNN layers| 0.001| 0.97| 0.72|
+| simpleCNN - 2 CNN layers| 0.0005| 0.87| 0.70|
+| DenseNet with default parameters| 0.0005| 0.98| 0.89|
+
 ## Dependencies
 
 numpy=1.20.3 <br>
