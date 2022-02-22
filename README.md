@@ -27,7 +27,11 @@ This data was initially published on [AnalyticsVidhya](https://datahack.analytic
 
 ## Dependencies
 
-numpy=1.20.3
-pandas=1.3.5
-torch=1.9.1
-torchvision=0.10.1 
+numpy=1.20.3 <br>
+pandas=1.3.5 <br>
+torch=1.9.1 <br>
+torchvision=0.10.1 <br>
+
+## License
+
+This analysis was created by Rohit Rawat. Feel free to fork/clone and build on this code with attirbution to this repository. It is licensed under the terms of the MIT license. 
