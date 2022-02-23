@@ -7,7 +7,7 @@ The goal of this CNN implementation is three fold:
 2. Use Transfer Learning to improve my model scores
 3. Use pruning to simplify the TL model while maintaining my scores
 
-My aim is to implement this excellent research paper on training sparse neural networks using the [Lottery Ticket Hypothesis](https://arxiv.org/pdf/1803.03635.pdf).
+My aim is to implement [this](https://arxiv.org/pdf/1803.03635.pdf) excellent research paper on training sparse neural networks using the Lottery Ticket Hypothesis.
 
 ## Dataset
 
@@ -32,13 +32,15 @@ Since the problem is a multi-label image classification problem, CrossEntropyLos
 ```{python}
 torch.manual_seed(2018)
 ```
-The simpleCNN is my baseline model implemenetation with 2 CNN layers using MaxPool and Dropout some layers in between. The following scores are of the last epoch.
+The simpleCNN is my baseline model implementation with 2 CNN layers using MaxPool and Dropout some layers in between. For the transfer learning networks, two approaches were used. The first one is where the network layer parameters were frozen, meaning that the default pretrained weights and biases were used. In the second approach, one of the main subnetwork layer parameters was trained. The parameters refer to the weights and biases associated with the layers. The following scores are of the last epoch.
 
 | Implementation| Learning Rate| Train Accuracy | Valid Accuracy |
 |-|-|-|-|
 | simpleCNN - 2 CNN layers| 0.001| 0.98| 0.74|
-| densenet121 with default parameters| 0.001| 0.99| 0.89|
-| resnet18 with default parameters| 0.001| 0.98| 0.87|
+| densenet121: default parameters| 0.001| 0.99| 0.89|
+| densenet121: train denseblock3 params| 0.001| 0.99| 0.92|
+| resnet18: default parameters| 0.001| 0.98| 0.87|
+| resnet18: train layer3 params| 0.001| 0.99| 0.92|
 
 ## Dependencies
 
