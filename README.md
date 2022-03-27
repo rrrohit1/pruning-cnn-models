@@ -9,6 +9,8 @@ The goal of this CNN implementation is three fold:
 
 My aim is to implement [this](https://arxiv.org/pdf/1803.03635.pdf) excellent research paper on training sparse neural networks using the Lottery Ticket Hypothesis.
 
+> **The Lottery Ticket Hypothesis**: A randomly-initialized, dense neural network contains a subnetwork that is initialised such that — when trained in isolation — it can match the test accuracy of the original network after training for at most the same number of iterations. - Frankle & Carbin (2019, p.2)
+
 ## Dataset
 
 There are ~24,000 images of Natural scences around the world and is present on [Kaggle](https://www.kaggle.com/puneet6060/intel-image-classification). The images are of size 150x150 distributed under 6 categories which are as follows:
